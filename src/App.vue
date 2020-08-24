@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <StarWars v-if="result" :result="result"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import StarWars from './components/StarWars';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    StarWars
+  },
+  data: function() {
+    return {
+      result: {}
+    }
+  },
+  mounted: function () {
+    fetch('https://swapi.dev/api/people/1', { method : 'get'})
+    .then(response => response.json()).then(resultData => {
+      this.result = resultData;
+    })
   }
 }
 </script>
